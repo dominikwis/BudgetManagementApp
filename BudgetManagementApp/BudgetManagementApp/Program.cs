@@ -29,6 +29,14 @@ while (true)
     }
 }
 
+var summaryResults = type.GetSummaryResults();
+Console.WriteLine(summaryResults.SummaryBudget);
+
+//if (type.PlanningBudget < 0)
+//{
+//    Console.WriteLine($"Well, you really messed up! You exceeded your budget by {summaryResults.Sum}");
+//}
+
 
 /*
  * Opis aplikacji

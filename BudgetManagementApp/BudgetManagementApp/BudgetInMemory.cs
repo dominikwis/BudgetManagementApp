@@ -54,4 +54,16 @@
             throw new Exception("Invalid expense value. Try use only numbers instead of words");
         }
     }
+
+    public override SummaryResults GetSummaryResults()
+    {
+        var summaryResults = new SummaryResults(this.PlanningBudget);
+
+        foreach (var expense in this.expenses)
+        {
+            summaryResults.AddExpenses(expense);
+        }
+
+        return summaryResults;
+    }
 }
