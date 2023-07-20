@@ -1,9 +1,10 @@
 ﻿public class BudgetInMemory : BudgetBase
 {
-    private List<decimal> expenses = new List<decimal>();
+    private List<decimal> expenses;
     public BudgetInMemory(string name)
         : base(name)
     {
+        expenses = new List<decimal>();
     }
 
     public override void AddPlanningBudget(decimal budget)
