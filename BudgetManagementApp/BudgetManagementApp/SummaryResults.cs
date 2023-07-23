@@ -7,7 +7,7 @@
     {
         get
         {
-            return budget - this.Sum;
+            return this.budget - this.Sum;
         }
     }
 

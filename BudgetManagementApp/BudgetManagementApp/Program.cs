@@ -5,7 +5,35 @@ var type = new BudgetInMemory("Bills");
 Console.WriteLine("***********************************\n Welcome in Budget Management App!\n***********************************");
 Console.WriteLine("What's your budget in PLN? ");
 string input = Console.ReadLine();
-type.AddPlanningBudget(input);
+
+if (input.Length == 1)
+{
+    if (char.IsLetter(input[0]))
+    {
+        char character = input[0];
+
+        try
+        {
+            type.AddPlanningBudget(character);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    else
+    {
+        try
+        {
+            type.AddPlanningBudget(input);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+
 Console.WriteLine("Ok! Let's add some expenses:");
 
 while (true)
@@ -30,12 +58,21 @@ while (true)
 }
 
 var summaryResults = type.GetSummaryResults();
-Console.WriteLine(summaryResults.SummaryBudget);
 
-//if (type.PlanningBudget < 0)
-//{
-//    Console.WriteLine($"Well, you really messed up! You exceeded your budget by {summaryResults.Sum}");
-//}
+if (summaryResults.SummaryBudget < 0)
+{
+    var positiveNumber = summaryResults.SummaryBudget;
+    positiveNumber = Math.Abs(positiveNumber);
+    Console.WriteLine($"Well, you really messed up! You exceeded your budget by {positiveNumber} PLN");
+}
+else if (summaryResults.SummaryBudget == 0)
+{
+    Console.WriteLine($"Congratulations, you've hit the budget on the dot!");
+}
+else
+{
+    Console.WriteLine($"You are the best! You stayed within the planned budget. You still have to allocate: {summaryResults.SummaryBudget}");
+}
 
 
 /*
