@@ -1,4 +1,6 @@
-﻿namespace BudgetManagementApp
+﻿using static BudgetBase;
+
+namespace BudgetManagementApp
 {
     public interface IBudget
     {
@@ -10,6 +12,10 @@
         void AddExpenses(decimal expenses);
         void AddExpenses(string expenses);
         void AddPlanningBudget(char expenses);
+
+        event AddedItemDelegate BudgetAdded;
+        event AddedItemDelegate ExpenseAdded;
+
         SummaryResults GetSummaryResults();
     }
 }

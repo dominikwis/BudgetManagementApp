@@ -1,24 +1,31 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿var type = new BudgetInMemory("Bills");
+bool boolChar = true;
 
-var type = new BudgetInMemory("Bills");
+type.BudgetAdded += SuccessfulAdded;
+type.ExpenseAdded += SuccessfulAdded;
 
 Console.WriteLine("***********************************\n Welcome in Budget Management App!\n***********************************");
-Console.WriteLine("What's your budget in PLN? ");
-string input = Console.ReadLine();
 
-if (input.Length == 1)
+do
 {
-    if (char.IsLetter(input[0]))
+    Console.WriteLine("What's your budget in PLN? ");
+    string input = Console.ReadLine();
+    if (input.Length == 1)
     {
-        char character = input[0];
+        if (char.IsLetter(input[0]))
+        {
+            char character = input[0];
 
-        try
-        {
-            type.AddPlanningBudget(character);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
+            try
+            {
+                type.AddPlanningBudget(character);
+                boolChar = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                boolChar = true;
+            }
         }
     }
     else
@@ -26,15 +33,17 @@ if (input.Length == 1)
         try
         {
             type.AddPlanningBudget(input);
+            boolChar = false;
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            boolChar = true;
         }
     }
-}
+} while (boolChar);
 
-Console.WriteLine("Ok! Let's add some expenses:");
+    Console.WriteLine("\nOk! Let's add some expenses:");
 
 while (true)
 {
@@ -71,9 +80,13 @@ else if (summaryResults.SummaryBudget == 0)
 }
 else
 {
-    Console.WriteLine($"You are the best! You stayed within the planned budget. You still have to allocate: {summaryResults.SummaryBudget}");
+    Console.WriteLine($"You are the best! You stayed within the planned budget. You still have to allocate: {summaryResults.SummaryBudget} PLN");
 }
 
+void SuccessfulAdded (object sender, EventArgs args)
+{
+    Console.Write("Successfuly added ");
+}
 
 /*
  * Opis aplikacji
