@@ -1,4 +1,4 @@
-﻿var type = new BudgetInMemory("Bills");
+﻿var type = new BudgetInFile("Bills");
 bool boolChar = true;
 
 type.BudgetAdded += SuccessfulAdded;
