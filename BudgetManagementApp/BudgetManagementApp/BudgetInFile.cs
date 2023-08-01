@@ -2,7 +2,7 @@
 
 public class BudgetInFile : BudgetBase
 {
-    private List<decimal> expenses;
+    private List<decimal> expenses = new List<decimal>();
     private const string fileName = "expenses.txt";
 
     public override event AddedItemDelegate BudgetAdded;
@@ -11,7 +11,6 @@ public class BudgetInFile : BudgetBase
     public BudgetInFile(string name)
         : base(name)
     {
-        expenses = new List<decimal>();
     }
 
     public override void AddPlanningBudget(decimal budget)
@@ -106,7 +105,6 @@ public class BudgetInFile : BudgetBase
     public override SummaryResults GetSummaryResults()
     {
         var summaryResults = new SummaryResults(this.PlanningBudget);
-
 
         if (File.Exists(fileName))
         {

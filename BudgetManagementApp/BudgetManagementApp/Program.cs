@@ -1,10 +1,41 @@
-﻿var type = new BudgetInFile("Bills");
+﻿/*
+ * Opis aplikacji
+ * prosta aplikacja do ustalania budżetu początkowego a następnie wpisywanie kolejnych wydatków. Po kliknięciu jakiegoś przycisku można
+ * podsumować wydatki i sprawdzić czy nie wyszło się ponad zaplanowany budżet.
+ * Obiektem są kategorie danego budżetu np. Domowe, Rachunki itd.
+ */
+
+List<BudgetBase> categories = new List<BudgetBase> { new BudgetInMemory("Bills"), new BudgetInFile("Bills") };
+
+int i = 0;
+string inputFileOrMemory = null;
 bool boolChar = true;
 
-type.BudgetAdded += SuccessfulAdded;
-type.ExpenseAdded += SuccessfulAdded;
-
 Console.WriteLine("***********************************\n Welcome in Budget Management App!\n***********************************");
+Console.WriteLine("Do you want to save your calculation in memory => then write 'm' or file => then write 'f'?");
+
+do
+{
+    inputFileOrMemory = Console.ReadLine();
+
+    if (inputFileOrMemory == "m")
+    {
+        i = 0;
+    }
+    else if (inputFileOrMemory == "f")
+    {
+        i = 1;
+    }
+    else
+    {
+        Console.WriteLine("You have to use correct letter, please repeat correctly.");
+        inputFileOrMemory = null;
+    }
+} while (inputFileOrMemory == null);
+
+
+categories[i].BudgetAdded += SuccessfulAdded;
+categories[i].ExpenseAdded += SuccessfulAdded;
 
 do
 {
@@ -18,7 +49,7 @@ do
 
             try
             {
-                type.AddPlanningBudget(character);
+                categories[i].AddPlanningBudget(character);
                 boolChar = false;
             }
             catch (Exception ex)
@@ -32,7 +63,7 @@ do
     {
         try
         {
-            type.AddPlanningBudget(input);
+            categories[i].AddPlanningBudget(input);
             boolChar = false;
         }
         catch (Exception ex)
@@ -43,7 +74,9 @@ do
     }
 } while (boolChar);
 
-    Console.WriteLine("\nOk! Let's add some expenses:");
+var summaryResults = categories[i].GetSummaryResults();
+
+Console.WriteLine($"\nOk! Let's add some expenses, you have still {summaryResults.SummaryBudget} PLN to allocate.");
 
 while (true)
 {
@@ -57,7 +90,8 @@ while (true)
     {
         try
         {
-            type.AddExpenses(expensesInput);
+            
+            categories[i].AddExpenses(expensesInput);
         }
         catch (Exception ex)
         {
@@ -66,7 +100,7 @@ while (true)
     }
 }
 
-var summaryResults = type.GetSummaryResults();
+summaryResults = categories[i].GetSummaryResults();
 
 if (summaryResults.SummaryBudget < 0)
 {
@@ -87,10 +121,3 @@ void SuccessfulAdded (object sender, EventArgs args)
 {
     Console.Write("Successfuly added ");
 }
-
-/*
- * Opis aplikacji
- * prosta aplikacja do ustalania budżetu początkowego a następnie wpisywanie kolejnych wydatków. Po kliknięciu jakiegoś przycisku można
- * podsumować wydatki i sprawdzić czy nie wyszło się ponad zaplanowany budżet.
- * Klasą będą kategorie danego budżetu np. Domowe, Rachunki itd.
- */

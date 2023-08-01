@@ -2,7 +2,7 @@
 
 public class BudgetInMemory : BudgetBase
 {
-    private List<decimal> expenses;
+    private List<decimal> expenses= new List<decimal>();
 
     public override event AddedItemDelegate BudgetAdded;
     public override event AddedItemDelegate ExpenseAdded;
@@ -10,7 +10,6 @@ public class BudgetInMemory : BudgetBase
     public BudgetInMemory(string name)
         : base(name)
     {
-        expenses = new List<decimal>();
     }
 
     public override void AddPlanningBudget(decimal budget)
