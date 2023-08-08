@@ -77,6 +77,7 @@ do
 var summaryResults = categories[i].GetSummaryResults();
 
 Console.WriteLine($"\nOk! Let's add some expenses, you have still {summaryResults.SummaryBudget} PLN to allocate.");
+Console.WriteLine("If you want to summarize your budet, type 'q'");
 
 while (true)
 {
